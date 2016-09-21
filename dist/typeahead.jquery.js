@@ -1,7 +1,7 @@
 /*!
  * typeahead.js 0.11.1
  * https://github.com/twitter/typeahead.js
- * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
+ * Copyright 2013-2016 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 (function(root, factory) {
@@ -807,8 +807,9 @@
                     suggestions = suggestions || [];
                     if (!canceled && rendered < that.limit) {
                         that.cancel = $.noop;
-                        that._append(query, suggestions.slice(0, that.limit - rendered));
-                        rendered += suggestions.length;
+                        var idx = Math.abs(rendered - that.limit);
+                        rendered += idx;
+                        that._append(query, suggestions.slice(0, idx));
                         that.async && that.trigger("asyncReceived", query);
                     }
                 }
@@ -914,6 +915,9 @@
                 this.$node.on("click.tt", this.selectors.selectable, onSelectableClick);
                 this.$node.on("mouseover", this.selectors.selectable, function() {
                     that.setCursor($(this));
+                });
+                this.$node.on("mouseleave", function() {
+                    that._removeCursor();
                 });
                 _.each(this.datasets, function(dataset) {
                     dataset.onSync("asyncRequested", that._propagate, that).onSync("asyncCanceled", that._propagate, that).onSync("asyncReceived", that._propagate, that).onSync("rendered", that._onRendered, that).onSync("cleared", that._onCleared, that);
@@ -1133,8 +1137,6 @@
                 var $selectable;
                 if ($selectable = this.menu.getActiveSelectable()) {
                     this.select($selectable) && $e.preventDefault();
-                } else if ($selectable = this.menu.getTopSelectable()) {
-                    this.autocomplete($selectable) && $e.preventDefault();
                 }
             },
             _onEscKeyed: function onEscKeyed() {
