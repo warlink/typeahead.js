@@ -1,15 +1,15 @@
 {
-  "name": "corejs-typeahead",
+  "name": "warlink-typeahead",
   "description": "fast and fully-featured autocomplete library",
   "keywords": [
     "typeahead",
     "autocomplete"
   ],
-  "homepage": "http://corejavascript.github.io/typeahead.js/",
+  "homepage": "http://typeahead.js.org/",
   "bugs": "https://github.com/corejavascript/typeahead.js/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/corejavascript/typeahead.js.git"
+    "url": "https://github.com/warlink/typeahead.js.git"
   },
   "author": {
     "name": "Twitter, Inc.",
